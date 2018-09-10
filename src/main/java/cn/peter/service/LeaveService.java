@@ -11,7 +11,6 @@ public interface LeaveService {
     public int leaveCount(Map<String, Object> map);
 
     public int addLeave(Leave leave);
-
     public Leave findById(String id);
 
     public int updateLeave(Leave leave);

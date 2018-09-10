@@ -9,6 +9,13 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import cn.peter.model.Group;
 import cn.peter.model.MemberShip;
 import cn.peter.model.PageInfo;
@@ -17,17 +24,11 @@ import cn.peter.service.GroupService;
 import cn.peter.service.MemberShipService;
 import cn.peter.service.UserService;
 import cn.peter.util.ResponseUtil;
-import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * �û�����
- *
+ * 用户管理
  * @author Administrator
+ *
  */
 @Controller
 @RequestMapping("/user")
@@ -41,10 +42,9 @@ public class UserController {
 
     @Resource
     private GroupService groupService;
-
     /**
-     * ����
      *
+     * 登入
      * @param response
      * @param request
      * @return
@@ -60,7 +60,7 @@ public class UserController {
         JSONObject result = new JSONObject();
         if (memberShip == null) {
             result.put("success", false);
-            result.put("errorInfo", "�û��������������");
+            result.put("errorInfo", "用户名或者密码错误！");
         } else {
             result.put("success", true);
             request.getSession().setAttribute("currentMemberShip", memberShip);
@@ -70,8 +70,7 @@ public class UserController {
     }
 
     /**
-     * ��ҳ��ѯ�û�
-     *
+     * 分页查询用户
      * @return
      * @throws Exception
      */
@@ -87,14 +86,14 @@ public class UserController {
         Integer pageSize = Integer.parseInt(rows);
         userPage.setPageSize(pageSize);
 
-        // �ڼ�ҳ
+        // 第几页
         String pageIndex = page;
         if (pageIndex == null || pageIndex == "") {
             pageIndex = "1";
         }
         userPage.setPageIndex((Integer.parseInt(pageIndex) - 1)
                 * pageSize);
-        // ȡ����ҳ��
+        // 取得总页数
         int userCount = userService.userCount(userMap);
         userPage.setCount(userCount);
         userMap.put("pageIndex", userPage.getPageIndex());
@@ -102,17 +101,15 @@ public class UserController {
 
         List<User> cusDevPlanList = userService.userPage(userMap);
         JSONObject json = new JSONObject();
-        // ��List��ʽת����JSON
+        // 把List格式转换成JSON
         JSONArray jsonArray = JSONArray.fromObject(cusDevPlanList);
         json.put("rows", jsonArray);
         json.put("total", userCount);
         ResponseUtil.write(response, json);
         return null;
     }
-
     /**
-     * �޸��û�
-     *
+     * 修改用户
      * @return
      * @throws Exception
      */
@@ -128,10 +125,8 @@ public class UserController {
         ResponseUtil.write(response, json);
         return null;
     }
-
     /**
-     * �����h���Ñ�
-     *
+     * 批量刪除用戶
      * @param response
      * @return
      * @throws Exception
@@ -161,8 +156,7 @@ public class UserController {
     }
 
     /**
-     * �����Ñ�
-     *
+     * 新增用戶
      * @return
      * @throws Exception
      */
@@ -187,14 +181,14 @@ public class UserController {
         Integer pageSize = Integer.parseInt(rows);
         userPage.setPageSize(pageSize);
 
-        // �ڼ�ҳ
+        // 第几页
         String pageIndex = page;
         if (pageIndex == null || pageIndex == "") {
             pageIndex = "1";
         }
         userPage.setPageIndex((Integer.parseInt(pageIndex) - 1)
                 * pageSize);
-        // ȡ����ҳ��
+        // 取得总页数
         int userCount = userService.userCount(userMap);
         userPage.setCount(userCount);
         userMap.put("pageIndex", userPage.getPageIndex());
@@ -208,7 +202,7 @@ public class UserController {
                 buffer.append(g.getName() + ",");
             }
             if (buffer.length() > 0) {
-                //deleteCharAt ɾ�����һ��Ԫ��
+                //deleteCharAt 删除最后一个元素
                 users.setGroups(buffer.deleteCharAt(buffer.length() - 1).toString());
             } else {
                 user.setGroups(buffer.toString());

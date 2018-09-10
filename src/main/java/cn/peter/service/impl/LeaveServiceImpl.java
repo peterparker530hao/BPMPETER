@@ -5,11 +5,11 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import cn.peter.dao.LeaveDao;
 import cn.peter.model.Leave;
 import cn.peter.service.LeaveService;
-import org.springframework.stereotype.Service;
-
 @Service("leaveService")
 public class LeaveServiceImpl implements LeaveService {
     @Resource

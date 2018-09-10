@@ -6,8 +6,7 @@ import cn.peter.model.MemberShip;
 
 public interface MemberShipDao {
     /**
-     * �û�����ķ���
-     *
+     * 用户登入的方法
      * @return
      */
     public MemberShip userLogin(Map<String, Object> map);

@@ -1,16 +1,15 @@
 package cn.peter.model;
-
 import java.util.List;
 
 /*
- * ��ҳ������
+ * 分页工具类
  */
 public class PageInfo<T> {
     public Integer pageSize = 5;
-    private Integer count;// �ܼ�¼��
-    private List<T> pageList;// ��ǰҳ�ļ�¼����
-    private Integer pageIndex;// ��ǰҳ��
-    private Integer totalPages;// ��ҳ��
+    private Integer count;// 总记录数
+    private List<T> pageList;// 当前页的记录集合
+    private Integer pageIndex;// 当前页号
+    private Integer totalPages;// 总页数
 
     public Integer getPageSize() {
         return pageSize;

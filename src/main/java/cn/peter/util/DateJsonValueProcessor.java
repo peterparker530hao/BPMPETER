@@ -6,9 +6,9 @@ import net.sf.json.JsonConfig;
 import net.sf.json.processors.JsonValueProcessor;
 
 /**
- * json-lib ���ڴ�����
- *
+ * json-lib 日期处理类
  * @author Administrator
+ *
  */
 public class DateJsonValueProcessor implements JsonValueProcessor {
 

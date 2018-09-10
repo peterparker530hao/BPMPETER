@@ -8,47 +8,40 @@ import cn.peter.model.Group;
 public interface GroupDao {
 
     /**
-     * ��ѯ���н�ɫ���������
-     *
+     * 查询所有角色填充下拉框
      * @return
      */
     public List<Group> findGroup();
 
     /**
-     * ��ҳ��ѯ
-     *
+     * 分页查询
      * @param map
      * @return
      */
     public List<Group> groupPage(Map<String, Object> map);
-
     /**
-     * ͳ������
-     *
+     * 统计数量
      * @param map
      * @return
      */
     public int groupCount(Map<String, Object> map);
 
     /**
-     * �����h��
-     *
+     * 批量刪除
      * @param list
      * @return
      */
     public int deleteGroup(List<String> list);
 
     /**
-     * �޸�
-     *
+     * 修改
      * @param group
      * @return
      */
     public int updateGroup(Group group);
 
     /**
-     * ����
-     *
+     * 新增
      * @param group
      * @return
      */

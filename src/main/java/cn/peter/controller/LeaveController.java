@@ -8,12 +8,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.peter.model.Leave;
-import cn.peter.model.PageInfo;
-import cn.peter.model.User;
-import cn.peter.service.LeaveService;
-import cn.peter.util.DateJsonValueProcessor;
-import cn.peter.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -25,10 +19,18 @@ import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.peter.model.Leave;
+import cn.peter.model.PageInfo;
+import cn.peter.model.User;
+import cn.peter.service.LeaveService;
+import cn.peter.util.DateJsonValueProcessor;
+import cn.peter.util.ResponseUtil;
+
 /**
- * ҵ����
+ * 业务处理
  *
  * @author Administrator
+ *
  */
 @Controller
 @RequestMapping("/leave")
@@ -40,10 +42,8 @@ public class LeaveController {
     private RuntimeService runtimeService;
     @Resource
     private TaskService taskService;
-
     /**
-     * ��ҳ��ѯҵ��
-     *
+     * 分页查询业务
      * @param response
      * @param rows
      * @param page
@@ -78,8 +78,7 @@ public class LeaveController {
     }
 
     /**
-     * �����ٵ�
-     *
+     * 添加请假单
      * @param leave
      * @param response
      * @return
@@ -87,12 +86,12 @@ public class LeaveController {
      */
     @RequestMapping("/save")
     public String save(Leave leave, HttpServletResponse response, String userId) throws Exception {
-        System.out.println("��������ʲô��" + userId);
+        System.out.println("这里面是什么鬼：" + userId);
         User user = new User();
         user.setId(userId);
         int resultTotal = 0;
         leave.setLeaveDate(new Date());
-        //����û�����
+        //添加用户对象
         leave.setUser(user);
         resultTotal = leaveService.addLeave(leave);
         JSONObject result = new JSONObject();
@@ -104,10 +103,8 @@ public class LeaveController {
         ResponseUtil.write(response, result);
         return null;
     }
-
     /**
-     * �ύՈ��������Ո
-     *
+     * 提交請假流程申請
      * @return
      * @throws Exception
      */
@@ -115,35 +112,33 @@ public class LeaveController {
     public String startApply(HttpServletResponse response, String leaveId) throws Exception {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("leaveId", leaveId);
-        // ��������
+        // 启动流程
         ProcessInstance pi = runtimeService.startProcessInstanceByKey("activitiemployeeProcess", variables);
-        // ��������ʵ��Id��ѯ����
+        // 根据流程实例Id查询任务
         Task task = taskService.createTaskQuery().processInstanceId(pi.getProcessInstanceId()).singleResult();
-        // ��� ѧ����д��ٵ�����
+        // 完成 学生填写请假单任务
         taskService.complete(task.getId());
         Leave leave = leaveService.findById(leaveId);
-        //�޸�״̬
-        leave.setState("�����");
+        //修改状态
+        leave.setState("审核中");
         leave.setProcessInstanceId(pi.getProcessInstanceId());
-        // �޸���ٵ�״̬
+        // 修改请假单状态
         leaveService.updateLeave(leave);
         JSONObject result = new JSONObject();
         result.put("success", true);
         ResponseUtil.write(response, result);
         return null;
     }
-
     /**
-     * ��ѯ������Ϣ
-     *
+     * 查询流程信息
      * @param response
-     * @param taskId   ����ʵ��ID
+     * @param taskId  流程实例ID
      * @return
      * @throws Exception
      */
     @RequestMapping("/getLeaveByTaskId")
     public String getLeaveByTaskId(HttpServletResponse response, String taskId) throws Exception {
-        //�ȸ�������ID��ѯ
+        //先根据流程ID查询
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         Leave leave = leaveService.getLeaveByTaskId(task.getProcessInstanceId());
         JSONObject result = new JSONObject();

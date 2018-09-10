@@ -1,5 +1,4 @@
 package cn.peter.controller;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,11 +8,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.peter.model.Group;
-import cn.peter.model.PageInfo;
-import cn.peter.model.User;
-import cn.peter.service.GroupService;
-import cn.peter.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -21,20 +15,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import cn.peter.model.Group;
+import cn.peter.model.PageInfo;
+import cn.peter.model.User;
+import cn.peter.service.GroupService;
+import cn.peter.util.ResponseUtil;
+
 /**
- * ��ɫ����
- *
+ * 角色管理
  * @author Administrator
+ *
  */
 @Controller
 @RequestMapping("/group")
 public class GroupController {
     @Resource
     private GroupService groupService;
-
     /**
-     * ����ɫ������
-     *
+     * 填充角色下拉框
      * @param response
      * @return
      * @throws Exception
@@ -46,10 +44,10 @@ public class GroupController {
         JSONArray jsonArray = new JSONArray();
 
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("trueName", "��ѡ��...");
-        //תΪJSON��ʽ������
+        jsonObject.put("trueName", "请选择...");
+        //转为JSON格式的数据
         jsonArray.add(jsonObject);
-        //��listתΪJSON
+        //将list转为JSON
         JSONArray rows = JSONArray.fromObject(list);
         jsonArray.addAll(rows);
         ResponseUtil.write(response, jsonArray);
@@ -57,8 +55,7 @@ public class GroupController {
     }
 
     /**
-     * ��ҳ��ѯ�û�
-     *
+     * 分页查询用户
      * @return
      * @throws Exception
      */
@@ -74,14 +71,14 @@ public class GroupController {
         Integer pageSize = Integer.parseInt(rows);
         userPage.setPageSize(pageSize);
 
-        // �ڼ�ҳ
+        // 第几页
         String pageIndex = page;
         if (pageIndex == null || pageIndex == "") {
             pageIndex = "1";
         }
         userPage.setPageIndex((Integer.parseInt(pageIndex) - 1)
                 * pageSize);
-        // ȡ����ҳ��
+        // 取得总页数
         int userCount = groupService.groupCount(groupMap);
         userPage.setCount(userCount);
         groupMap.put("pageIndex", userPage.getPageIndex());
@@ -89,17 +86,15 @@ public class GroupController {
 
         List<Group> cusDevPlanList = groupService.groupPage(groupMap);
         JSONObject json = new JSONObject();
-        // ��List��ʽת����JSON
+        // 把List格式转换成JSON
         JSONArray jsonArray = JSONArray.fromObject(cusDevPlanList);
         json.put("rows", jsonArray);
         json.put("total", userCount);
         ResponseUtil.write(response, json);
         return null;
     }
-
     /**
-     * �޸��û�
-     *
+     * 修改用户
      * @return
      * @throws Exception
      */
@@ -115,10 +110,8 @@ public class GroupController {
         ResponseUtil.write(response, json);
         return null;
     }
-
     /**
-     * �����h���Ñ�
-     *
+     * 批量刪除用戶
      * @param response
      * @return
      * @throws Exception
@@ -148,8 +141,7 @@ public class GroupController {
     }
 
     /**
-     * �����Ñ�
-     *
+     * 新增用戶
      * @return
      * @throws Exception
      */
@@ -175,7 +167,6 @@ public class GroupController {
         ResponseUtil.write(response, result);
         return null;
     }
-
     @RequestMapping("/findGroupByUserId")
     public String findGroupByUserId(HttpServletResponse response, String userId) throws Exception {
         List<Group> groupList = groupService.findByUserId(userId);

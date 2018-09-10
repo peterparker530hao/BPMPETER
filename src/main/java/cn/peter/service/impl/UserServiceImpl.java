@@ -5,10 +5,11 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import cn.peter.dao.UserDao;
 import cn.peter.model.User;
 import cn.peter.service.UserService;
-import org.springframework.stereotype.Service;
 
 @Service("serService")
 public class UserServiceImpl implements UserService {
@@ -19,17 +20,15 @@ public class UserServiceImpl implements UserService {
         return userDao.findById(userId);
     }
 //	/**
-//	 * ����
+//	 * 登入
 //	 * @return
 //	 */
 //	public User userLogin(User user){
 //		return userDao.userLogin(user);
 //	}
 
-    /**
-     * '
-     * ��ҳ��ѯ�û�
-     *
+    /**'
+     * 分页查询用户
      * @param map
      * @return
      */
@@ -42,8 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * ����ɾ���û�
-     *
+     * 批量删除用户
      * @param id
      * @return
      */
@@ -52,8 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * �޸��û�
-     *
+     * 修改用户
      * @param user
      * @return
      */
@@ -62,8 +59,7 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * �����û�
-     *
+     * 新增用户
      * @param user
      * @return
      */

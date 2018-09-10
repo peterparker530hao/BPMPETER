@@ -1,14 +1,9 @@
 package cn.peter.controller;
-
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
-
-import cn.peter.model.PageInfo;
-import cn.peter.util.DateJsonValueProcessor;
-import cn.peter.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -18,22 +13,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import cn.peter.model.PageInfo;
+import cn.peter.util.DateJsonValueProcessor;
+import cn.peter.util.ResponseUtil;
+
 /**
- * ���̲������
- *
+ * 流程部署管理
  * @author Administrator
+ *
  */
 @Controller
 @RequestMapping("/deploy")
 public class DeployController {
 
-    //ע��activitiService����
+    //注入activitiService服务
     @Resource
     private RepositoryService repositoryService;
 
     /**
-     * ��ҳ��ѯ����
-     *
+     * 分页查询流程
      * @param rows
      * @param page
      * @param s_name
@@ -47,23 +45,23 @@ public class DeployController {
             s_name = "";
         }
         PageInfo pageInfo = new PageInfo();
-        //���ÿҳ��ʾ����
+        //填充每页显示数量
         Integer sizePage = Integer.parseInt(rows);
         pageInfo.setPageSize(sizePage);
-        // �ڼ�ҳ
+        // 第几页
         String pageIndex = page;
         if (pageIndex == null || pageIndex == "") {
             pageIndex = "1";
         }
         pageInfo.setPageIndex((Integer.parseInt(pageIndex) - 1)
                 * sizePage);
-        //ȡ��������
+        //取得总数量
         long deployCount = repositoryService.createDeploymentQuery().deploymentNameLike("%" + s_name + "%")
                 .count();
 
-        List<Deployment> deployList = repositoryService.createDeploymentQuery()//�������̲�ѯʵ��
-                .orderByDeploymenTime().desc()  //����
-                .deploymentNameLike("%" + s_name + "%")   //����Nameģ����ѯ
+        List<Deployment> deployList = repositoryService.createDeploymentQuery()//创建流程查询实例
+                .orderByDeploymenTime().desc()  //降序
+                .deploymentNameLike("%" + s_name + "%")   //根据Name模糊查询
                 .listPage(pageInfo.getPageIndex(), pageInfo.getPageSize());
 
         JsonConfig jsonConfig = new JsonConfig();
@@ -76,19 +74,17 @@ public class DeployController {
         ResponseUtil.write(response, result);
         return null;
     }
-
     /**
-     * ���ϴ����̲���ZIP�ļ�
-     *
+     * 添上传流程部署ZIP文件
      * @return
      * @throws Exception
      */
     @RequestMapping("/addDeploy")
     public String addDeploy(HttpServletResponse response, MultipartFile deployFile) throws Exception {
-        repositoryService.createDeployment() //��������
-                .name(deployFile.getOriginalFilename())    //��Ҫ������������
-                .addZipInputStream(new ZipInputStream(deployFile.getInputStream()))//���ZIP������
-                .deploy();//��ʼ����
+        repositoryService.createDeployment() //创建部署
+                .name(deployFile.getOriginalFilename())    //需要部署流程名称
+                .addZipInputStream(new ZipInputStream(deployFile.getInputStream()))//添加ZIP输入流
+                .deploy();//开始部署
         JSONObject result = new JSONObject();
         result.put("success", true);
         ResponseUtil.write(response, result);
@@ -96,14 +92,13 @@ public class DeployController {
     }
 
     /**
-     * ����ɾ������
-     *
+     * 批量删除流程
      * @return
      * @throws Exception
      */
     @RequestMapping("/delDeploy")
     public String delDeploy(HttpServletResponse response, String ids) throws Exception {
-        //����ַ���
+        //拆分字符串
         String[] idsStr = ids.split(",");
         for (String str : idsStr) {
             repositoryService.deleteDeployment(str, true);

@@ -3,16 +3,17 @@ package cn.peter.controller;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import cn.peter.model.Group;
 import cn.peter.model.MemberShip;
 import cn.peter.model.User;
 import cn.peter.service.MemberShipService;
 import cn.peter.util.ResponseUtil;
 import cn.peter.util.StringUtil;
-import net.sf.json.JSONObject;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/memberShip")
@@ -22,11 +23,11 @@ public class MenberShipController {
 
     @RequestMapping("/updateMemberShip")
     public String updateMemberShip(HttpServletResponse response, String userId, String groupsIds) throws Exception {
-        //�h��ȫ����ɫ
+        //刪除全部角色
         memberShipService.deleteAllGroupsByUserId(userId);
 
         if (StringUtil.isNotEmpty(groupsIds)) {
-            //�ָ��ַ������ԣ��ָ�
+            //分割字符串，以，分割
             String idsArr[] = groupsIds.split(",");
             for (String groupId : idsArr) {
                 User user = new User();

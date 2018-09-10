@@ -5,10 +5,11 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.stereotype.Service;
+
 import cn.peter.dao.GroupDao;
 import cn.peter.model.Group;
 import cn.peter.service.GroupService;
-import org.springframework.stereotype.Service;
 
 @Service("groupService")
 public class GroupServiceImpl implements GroupService {
@@ -19,10 +20,8 @@ public class GroupServiceImpl implements GroupService {
     public List<Group> findByUserId(String id) {
         return groupDao.findByUserId(id);
     }
-
     /**
-     * ��ѯ���н�ɫ���������
-     *
+     * 查询所有角色填充下拉框
      * @return
      */
     public List<Group> findGroup() {
@@ -31,18 +30,15 @@ public class GroupServiceImpl implements GroupService {
 
 
     /**
-     * ��ҳ��ѯ
-     *
+     * 分页查询
      * @param map
      * @return
      */
     public List<Group> groupPage(Map<String, Object> map) {
         return groupDao.groupPage(map);
     }
-
     /**
-     * ͳ������
-     *
+     * 统计数量
      * @param map
      * @return
      */
@@ -51,8 +47,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     /**
-     * �����h��
-     *
+     * 批量刪除
      * @param list
      * @return
      */
@@ -61,8 +56,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     /**
-     * �޸�
-     *
+     * 修改
      * @param group
      * @return
      */

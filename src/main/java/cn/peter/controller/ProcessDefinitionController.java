@@ -7,8 +7,6 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import cn.peter.model.PageInfo;
-import cn.peter.util.ResponseUtil;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -19,10 +17,13 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import cn.peter.model.PageInfo;
+import cn.peter.util.ResponseUtil;
+
 /**
- * ���̶������
- *
+ * 流程定义管理
  * @author Administrator
+ *
  */
 @Controller
 @RequestMapping("/processDefinition")
@@ -35,8 +36,7 @@ public class ProcessDefinitionController {
     private HistoryService historyService;
 
     /**
-     * ���̶����ҳ��ѯ
-     *
+     * 流程定义分页查询
      * @return
      * @throws Exception
      */
@@ -69,11 +69,9 @@ public class ProcessDefinitionController {
         ResponseUtil.write(response, result);
         return null;
     }
-
     /**
-     * �鿴����ͼ
-     *
-     * @param deploymentId        ����ID
+     * 查看流程图
+     * @param deploymentId  流程ID
      * @param diagramResourceName
      * @param response
      * @return
