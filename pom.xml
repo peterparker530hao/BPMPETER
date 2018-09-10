@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>cn.peter</groupId>
@@ -9,15 +9,6 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>BPMPETER Maven Webapp</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
-  </properties>
   <build>
     <resources>
       <!-- maven项目中src源代码下的xml等资源文件编译进classes文件夹，
@@ -191,6 +182,12 @@
       <artifactId>activiti-engine</artifactId>
       <version>5.19.0.2</version>
     </dependency>
+
+    <!--<dependency>-->
+    <!--<groupId>org.activiti</groupId>-->
+    <!--<artifactId>activiti-spring</artifactId>-->
+    <!--<version>5.19.0.2</version>-->
+    <!--</dependency>-->
 
     <dependency>
       <groupId>org.activiti</groupId>

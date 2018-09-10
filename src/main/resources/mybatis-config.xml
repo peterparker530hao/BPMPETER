@@ -6,6 +6,6 @@
 
     <!-- 别名 -->
     <typeAliases>
-        <package name="com.java.activiti.model"/>
+        <package name="cn.peter.model"/>
     </typeAliases>
 </configuration>
