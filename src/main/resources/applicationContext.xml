@@ -29,7 +29,7 @@
         <property name="dataSource" ref="dataSource"/>
         <!-- 自动扫描mappers.xml文件 -->
         <!--<property name="mapperLocations" value="classpath:com/java/activiti/mappers/*.xml"></property>-->
-        <property name="mapperLocations" value="classpath*:com/java/activiti/mappers/*Mapper.xml"/>
+        <property name="mapperLocations" value="classpath*:cn/peter/mappers/*Mapper.xml"/>
         <!-- mybatis配置文件 -->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
     </bean>
