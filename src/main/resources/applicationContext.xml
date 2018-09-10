@@ -13,15 +13,14 @@
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
-
+    <context:property-placeholder location="classpath:jdbc.properties"/><!-- 加载配置文件 -->
     <!-- 配置数据源 -->
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url"
-                  value="jdbc:mysql://172.16.9.61:3306/db_employessleave?useUnicode=true&amp;characterEncoding=UTF-8"/>
-        <property name="username" value="root"/>
-        <property name="password" value="root"/>
+        <property name="driverClassName" value="${driverClass}"/>
+        <property name="url" value="${jdbcUrl}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
     </bean>
 
     <!-- 配置mybatis的sqlSessionFactory -->
@@ -72,12 +71,12 @@
     <!-- 配置事务切面 -->
     <aop:config>
         <aop:pointcut id="serviceOperation"
-                      expression="execution(* com.java.activiti.service.*.*(..))"/>
+                      expression="execution(* cn.peter.service.*.*(..))"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation"/>
     </aop:config>
 
     <!-- 自动扫描 -->
-    <context:component-scan base-package="com.java.activiti.service"/>
+    <context:component-scan base-package="cn.peter.service"/>
 
     <!-- 导入Activiti配置 -->
     <import resource="classpath:activiti-context.xml"/>
