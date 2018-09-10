@@ -216,4 +216,10 @@ public class UserController {
         return null;
     }
 
+    @RequestMapping("/logout")
+    public String logout(HttpServletResponse response, HttpServletRequest request) throws Exception {
+
+        request.getSession().setAttribute("currentMemberShip", null);
+        return "login";
+    }
 }
