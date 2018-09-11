@@ -3,6 +3,8 @@ package cn.peter.dao;
 import java.util.Map;
 
 import cn.peter.model.MemberShip;
+import org.springframework.stereotype.Repository;
+
 
 public interface MemberShipDao {
     /**

@@ -21,18 +21,23 @@
                 url: '${pageContext.request.contextPath}/task/audit_bz.action?state=' + state,
                 onSubmit: function () {
                     return $(this).form("validate");
+
                 },
                 success: function (result) {
+
                     var result = eval('(' + result + ')');
                     if (result.success) {
-                        $.messager.alert("系统系统", "提交成功！");
+                        $.messager.alert("系统", "提交成功！");
+
                     } else {
-                        $.messager.alert("系统系统", "提交失败，请联系管理员！");
-                        return;
+                        $.messager.alert("系统", "提交失败，请联系管理员！");
                     }
                 }
             });
+            window.parent.openTab('已办任务管理','yibanManage.jsp', 'icon-yiban');
         }
+
+
 
         $(function () {
             $.post("${pageContext.request.contextPath}/leave/getLeaveByTaskId.action", {taskId: '${param.taskId}'}, function (result) {

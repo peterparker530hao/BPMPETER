@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Map;
 
 import cn.peter.model.Leave;
+import org.springframework.stereotype.Repository;
 
 /**
  * 业务管理
  * @author Administrator
  *
  */
+
 public interface LeaveDao {
     public List<Leave> leavePage(Map<String, Object> map);
 

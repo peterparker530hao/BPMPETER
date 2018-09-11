@@ -23,7 +23,7 @@
         }
 
         function formatAction(val, row) {
-            return "<a href='javascript:openListActionDialog(" + row.id + ")'>流程执行过程</a>&nbsp;<a href='javascript:openListCommentDialog(" + row.id + ")'>历史批注</a>&nbsp;<a target='_blank' href='${pageContext.request.contextPath}/processDefinition/showViewByTaskId.do?taskId=" + row.id + "'>查看流程图</a>"
+            return "<a href='javascript:openListActionDialog(" + row.id + ")'>流程执行过程</a>&nbsp;<a href='javascript:openListCommentDialog(" + row.id + ")'>历史批注</a>&nbsp;<a target='_blank' href='${pageContext.request.contextPath}/task/showHistoricalView.action?taskId=" + row.id + "'>查看流程图</a>"
         }
 
         function openListCommentDialog(taskId) {

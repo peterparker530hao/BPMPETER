@@ -20,6 +20,7 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
@@ -180,7 +181,7 @@ public class TaskController {
      * @return
      */
     @RequestMapping("/showCurrentView")
-    public String showCurrentView(HttpServletResponse response, String taskId) {
+    public ModelAndView showCurrentView(HttpServletResponse response, String taskId) {
         //视图
         ModelAndView mav = new ModelAndView();
 
@@ -214,7 +215,7 @@ public class TaskController {
         mav.addObject("width", activityImpl.getWidth()); // 宽度
         mav.addObject("height", activityImpl.getHeight()); // 高度
         mav.setViewName("page/currentView");
-        return null;
+        return mav;
     }
     /**
      * 查询历史批注
@@ -387,4 +388,36 @@ public class TaskController {
         ResponseUtil.write(response, result);
         return null;
     }
+
+
+
+    /**
+     * 根据流程id查询历史流程图
+     * @return
+     */
+    @RequestMapping("/showHistoricalView")
+    public ModelAndView showHistoricalView(HttpServletResponse response, String taskId) {
+        //视图
+        ModelAndView mav = new ModelAndView();
+
+
+        HistoricTaskInstance hti = historyService.createHistoricTaskInstanceQuery()
+                .taskId(taskId)
+                .singleResult();
+
+
+
+        // 获取流程定义id
+        String processDefinitionId = hti.getProcessDefinitionId();
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery() // 创建流程定义查询
+                // 根据流程定义id查询
+                .processDefinitionId(processDefinitionId)
+                .singleResult();
+        // 部署id
+        mav.addObject("deploymentId", processDefinition.getDeploymentId());
+        mav.addObject("diagramResourceName", processDefinition.getDiagramResourceName()); // 图片资源文件名称
+        mav.setViewName("page/currentView");
+        return mav;
+    }
+
 }

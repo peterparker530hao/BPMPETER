@@ -30,8 +30,7 @@
 		    where m.GROUP_ID_=g.ID_ and 
 				  m.USER_ID_=u.ID_  and 
 				  u.PWD_=#{password} and 
-		      	  u.ID_=#{userName}  and
-				  g.ID_=#{groupId} 
+		      	  u.ID_=#{userName}
 	</select>
 
     <delete id="deleteAllGroupsByUserId" parameterType="String">

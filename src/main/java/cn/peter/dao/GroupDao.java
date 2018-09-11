@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import cn.peter.model.Group;
+import org.springframework.stereotype.Repository;
+
 
 public interface GroupDao {
 

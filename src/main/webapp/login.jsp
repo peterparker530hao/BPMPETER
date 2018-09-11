@@ -20,10 +20,7 @@
             $("#fm").form("submit", {
                 url: "${pageContext.request.contextPath}/user/userLogin.action",
                 onSubmit: function () {
-                    if ($("#groupId").combobox("getValue") == "请选择") {
-                        $.messager.alert("系统提示", "请选择用户角色！");
-                        return false;
-                    }
+                    debugger
                     return $(this).form("validate");
                 },
                 success: function (result) {
@@ -41,7 +38,6 @@
         function resetValue() {
             $("#userName").val("");
             $("#password").val("");
-            $("#groupId").combobox("setValue", "");
         }
 
     </script>
@@ -71,14 +67,6 @@
                 <td>
                     <input type="password" id="password" name="password" class="easyui-validatebox" required="true"
                            style="width: 200px"/>
-                </td>
-            </tr>
-            <tr>
-                <td>角色：</td>
-                <td>
-                    <input id="groupId" name="groupId" class="easyui-combobox"
-                           data-options="panelHeight:'auto',valueField:'id',textField:'name',url:'${pageContext.request.contextPath}/group/findGroup.action'"
-                           value="请选择"/>
                 </td>
             </tr>
             <tr>
