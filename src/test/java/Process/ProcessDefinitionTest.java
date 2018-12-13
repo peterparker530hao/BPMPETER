@@ -1,11 +1,9 @@
 package Process;
 
-
-
 import org.activiti.engine.*;
 
 import org.activiti.engine.repository.Deployment;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -23,7 +21,7 @@ public class ProcessDefinitionTest {
   ProcessEngine ProcessEngines;
 
     /**自動建表*/
-    @org.junit.Test
+    @Test
     public void createTable(){
         // 创建一个流程引擎配置对象
         ProcessEngineConfiguration conf = ProcessEngineConfiguration
@@ -44,7 +42,7 @@ public class ProcessDefinitionTest {
 
 
     /**部署流程定义*/
-    @org.junit.Test
+    @Test
     public void deploymentProcessDefinition(){
         Deployment deployment = ProcessEngines.getRepositoryService()//与流程定义和部署对象相关的Service
                 .createDeployment()//创建一个部署对象
