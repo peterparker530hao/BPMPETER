@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="BPMPETER" target="1.7" />
+      <module name="BPMPETER" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
