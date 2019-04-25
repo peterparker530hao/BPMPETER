@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.io.InputStream;
 import java.util.zip.ZipInputStream;
-
+//更新测试
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath*:spring-mvc.xml",
         "classpath*:mybatis-config.xml","classpath*:applicationContext.xml","classpath*:activiti-context.xml"})
